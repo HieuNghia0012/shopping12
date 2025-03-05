@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký & Đăng Nhập</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://wallpaperaccess.com/full/11722047.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: rgb(0, 187, 255);
+            overflow: hidden;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .form-title {
+            margin-bottom: 20px;
+        }
+
+        .form-toggle {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .form-toggle button {
+            background-color: transparent;
+            border: none;
+            color: #007bff;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 15px;
+            transition: border-bottom 0.3s;
+        }
+
+        .form-toggle button.active {
+            border-bottom: 2px solid #007bff;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff4d4d;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #e60000;
+        }
+
+        .cancel-btn {
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            background: none;
+            color: #007bff;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .terms {
+            font-size: 12px;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* CSS cho hiệu ứng cánh hoa */
+        .falling-leaf {
+            position: absolute;
+            top: -10px;
+            z-index: 999;
+            color: orange;  
+            font-size: 1em;
+            pointer-events: none;
+            animation-name: fall;
+            animation-duration: 10s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hiệu ứng cánh hoa -->
+    <div class="falling-leaves" aria-hidden="true">
+        <div class="falling-leaf">🍂</div>
+        <div class="falling-leaf">🍁</div>
+        <div class="falling-leaf">🍂</div>
+        <div class="falling-leaf">🍁</div>
+        <div class="falling-leaf">🍂</div>
+        <div class="falling-leaf">🍁</div>
+        <div class="falling-leaf">🍂</div>
+        <div class="falling-leaf">🍁</div>
+        <div class="falling-leaf">🍂</div>
+        <div class="falling-leaf">🍁</div>
+    </div>
+    <div class="form-container">
+        <div class="form-title">
+            <h2 id="formTitle">Đăng Nhập</h2>
+        </div>
+        <div class="form-toggle">
+            <button id="loginBtn" class="active" onclick="showLogin()">Đăng Nhập</button>
+            <button id="registerBtn" onclick="showRegister()">Đăng Ký</button>
+        </div>
+
+        <!-- Form Đăng Nhập -->
+        <div id="loginForm">
+            <form id="loginFormElement">
+                <div class="input-group">
+                    <label for="loginEmail">Tên người dùng:</label>
+                    <input type="text" id="loginEmail" name="loginEmail" placeholder="Nhập tên người dùng" required>
+                </div>
+                <div class="input-group">
+                    <label for="loginPassword">Mật khẩu:</label>
+                    <input type="password" id="loginPassword" name="loginPassword" placeholder="Nhập mật khẩu" required>
+                </div>
+                <button type="submit" class="submit-btn">Đăng Nhập</button>
+            </form>
+        </div>
+
+        <!-- Form Đăng Ký -->
+        <div id="registerForm" class="hidden">
+            <form id="registerFormElement">
+                <div class="input-group">
+                    <label for="username">Tên người dùng:</label>
+                    <input type="text" id="username" name="username" placeholder="Nhập họ tên" required>
+                </div>
+                <div class="input-group">
+                    <label for="registerPassword">Mật khẩu:</label>
+                    <input type="password" id="registerPassword" name="registerPassword" placeholder="Nhập mật khẩu" required>
+                </div>
+                <div class="input-group">
+                    <label for="confirmPassword">Xác nhận mật khẩu:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Nhập mật khẩu" required>
+                </div>
+                <button type="submit" class="submit-btn">Đăng Ký</button>
+                <button type="button" class="cancel-btn" onclick="cancelRegistration()">Bỏ qua</button>
+            </form>
+            <div class="terms">
+                Bằng việc đăng ký, bạn đã đồng ý với <a href="#">Điều khoản dịch vụ</a> & <a href="#">Chính sách bảo mật</a>.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('formTitle').innerText = 'Đăng Nhập';
+            document.getElementById('loginBtn').classList.add('active');
+            document.getElementById('registerBtn').classList.remove('active');
+        }
+
+        function showRegister() {
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('formTitle').innerText = 'Đăng Ký';
+            document.getElementById('registerBtn').classList.add('active');
+            document.getElementById('loginBtn').classList.remove('active');
+        }
+
+        // Xử lý form đăng nhập
+        document.getElementById('loginFormElement').addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngăn chặn việc load lại trang
+
+            const username = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Giả định kiểm tra đăng nhập thành công
+            if (username === 'hn' && password === '123') {
+                alert('Đăng nhập thành công!');
+                window.location.href = 'index.html'; // Chuyển hướng đến trang chính của bạn
+            } else {
+                alert('Sai tên người dùng hoặc mật khẩu!');
+            }
+        });
+
+        // Xử lý form đăng ký
+        document.getElementById('registerFormElement').addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngăn chặn việc load lại trang
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password === confirmPassword) {
+                alert('Đăng ký thành công!');
+                window.location.href = 'Trang Chủ copy.html'; // Chuyển hướng đến trang chính của bạn
+            } else {
+                alert('Mật khẩu không khớp!');
+            }
+        });
+    </script>
+</body>
+</html>

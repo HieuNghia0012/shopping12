@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        .cart {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 300px;
+            background: white;
+            border-left: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Products</h1>
+    <div>
+        <div class="product" data-name="White Shirt" data-price="19">
+            <p>White Shirt - $19.00</p>
+            <button onclick="addToCart(this)">Thêm vào giỏ hàng</button>
+        </div>
+        <div class="product" data-name="Converse Shoes" data-price="39">
+            <p>Converse Shoes - $39.00</p>
+            <button onclick="addToCart(this)">Thêm vào giỏ hàng</button>
+        </div>
+        <div class="product" data-name="Leather Watch" data-price="17">
+            <p>Leather Watch - $17.00</p>
+            <button onclick="addToCart(this)">Thêm vào giỏ hàng</button>
+        </div>
+    </div>
+    
+    <div class="cart">
+        <h2>Giỏ hàng</h2>
+        <div id="cart-items"></div>
+        <p>Total: $<span id="total-price">0</span></p>
+    </div>
+    
+    <script>
+        let cart = [];
+        function addToCart(button) {
+            let product = button.parentElement;
+            let name = product.getAttribute("data-name");
+            let price = parseFloat(product.getAttribute("data-price"));
+            
+            let item = cart.find(i => i.name === name);
+            if (item) {
+                item.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartContainer = document.getElementById("cart-items");
+            let totalPrice = 0;
+            cartContainer.innerHTML = "";
+            
+            cart.forEach(item => {
+                totalPrice += item.price * item.quantity;
+                let div = document.createElement("div");
+                div.classList.add("cart-item");
+                div.innerHTML = `${item.name} x${item.quantity} - $${item.price * item.quantity}`;
+                cartContainer.appendChild(div);
+            });
+            
+            document.getElementById("total-price").innerText = totalPrice.toFixed(2);
+        }
+    </script>
+</body>
+</html>
